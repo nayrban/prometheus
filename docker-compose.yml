@@ -42,6 +42,7 @@ services:
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
+#linux  - /:/rootfs:ro
       - C:\:/rootfs:ro
     command: 
       - '--path.procfs=/host/proc' 
@@ -77,6 +78,7 @@ services:
     image: google/cadvisor
     container_name: cadvisor
     volumes:
+#linux  - /:/rootfs:ro
       - C:\:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
