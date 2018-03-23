@@ -12,6 +12,7 @@ services:
 
   prometheus:
     image: prom/prometheus:v2.1.0
+    container_name: prometheus
     volumes:
       - ./prometheus/:/etc/prometheus/
       - prometheus_data:/prometheus
@@ -37,10 +38,11 @@ services:
 
   node-exporter:
     image: prom/node-exporter
+    container_name: node-exporter
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
-      - /:/rootfs:ro
+      - C:\:/rootfs:ro
     command: 
       - '--path.procfs=/host/proc' 
       - '--path.sysfs=/host/sys'
@@ -56,6 +58,7 @@ services:
 
   alertmanager:
     image: prom/alertmanager
+    container_name: alertmanager
     ports:
       - 9093:9093
     volumes:
@@ -72,13 +75,14 @@ services:
 #          - node.hostname == ${HOSTNAME}
   cadvisor:
     image: google/cadvisor
+    container_name: cadvisor
     volumes:
-      - /:/rootfs:ro
+      - C:\:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
     ports:
-      - 8080:8080
+      - "8080:8080"
     networks:
       - back-tier
     restart: always
@@ -87,6 +91,7 @@ services:
 
   grafana:
     image: grafana/grafana
+    container_name: grafana
     depends_on:
       - prometheus
     ports:
